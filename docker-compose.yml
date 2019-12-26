@@ -6,6 +6,8 @@ services:
       - "80:80"
   mapisto-api:
     image: "mapisto-api"
+    environment: 
+      MAPISTO_DB_HOST : database
     env_file: db_access.env
   database:
     image: postgres:12-alpine
