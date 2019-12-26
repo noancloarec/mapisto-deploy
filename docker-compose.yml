@@ -1,0 +1,13 @@
+version: '3'
+services:
+  nginx-proxy:
+    build: .
+    ports:
+      - "80:80"
+  mapisto-api:
+    image: "mapisto-api"
+    env_file: db_access.env
+  database:
+    image: postgres:12-alpine
+    volumes: 
+      - $HOME/docker/volumes/postgres:/var/lib/postgresql/data
