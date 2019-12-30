@@ -8,10 +8,12 @@ services:
     volumes :
       - /etc/letsencrypt:/etc/letsencrypt
   mapisto-api:
-    image: "mapisto/mapisto-api:0.1"
+    image: "mapisto/mapisto-api:0.1.1"
     environment: 
       MAPISTO_DB_HOST : database
-    env_file: db_access.env
+    env_file: 
+      - db_access.env
+      - mapisto_config.env
   database:
     image: postgres:12-alpine
     volumes: 
