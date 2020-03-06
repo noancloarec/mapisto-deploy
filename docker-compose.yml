@@ -16,6 +16,8 @@ services:
       - conf.env
     ports:
       - 127.0.0.1:5000:5000
+  mapisto-how:
+    image: mapisto/mapisto-how:latest
   database:
     image: postgres:12-alpine
     volumes:
