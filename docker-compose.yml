@@ -7,7 +7,7 @@ services:
       - 443:443
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt
-      - ./new_nginx_conf.d:/etc/nginx/conf.d
+      - ./nginx_conf.d:/etc/nginx/conf.d
   mapisto-front-prod:
     image: mapisto/mapisto-front:latest
   mapisto-front-dev:
@@ -19,12 +19,12 @@ services:
   mapisto-api-dev:
     image: mapisto/mapisto-api:dev
     env_file:
-      - conf.test.env
+      - conf.dev.env
   database-prod:
     image: postgres:12-alpine
     volumes:
-      - $HOME/docker/volumes/postgres:/var/lib/postgresql/data
-  database-test:
+      - $HOME/docker/volumes/postgres_prod:/var/lib/postgresql/data
+  database-dev:
     image: postgres:12-alpine
     volumes:
-      - $HOME/docker/volumes/postgres_test:/var/lib/postgresql/data
+      - $HOME/docker/volumes/postgres_dev:/var/lib/postgresql/data
