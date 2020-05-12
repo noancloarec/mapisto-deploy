@@ -1,0 +1,30 @@
+version: "3"
+services:
+  reverse-proxy:
+    image: nginx:1.17.6-alpine
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+      - ./new_nginx_conf.d:/etc/nginx/conf.d
+  mapisto-front-prod:
+    image: mapisto-front:latest
+  mapisto-front-dev:
+    image: mapisto-front:dev
+  mapisto-api-prod:
+    image: mapisto/mapisto-api:latest
+    env_file:
+      - conf.env
+  mapisto-api-dev:
+    image: mapisto/mapisto-api:dev
+    env_file:
+      - conf.test.env
+  database-prod:
+    image: postgres:12-alpine
+    volumes:
+      - $HOME/docker/volumes/postgres:/var/lib/postgresql/data
+  database-test:
+    image: postgres:12-alpine
+    volumes:
+      - $HOME/docker/volumes/postgres_test:/var/lib/postgresql/data
