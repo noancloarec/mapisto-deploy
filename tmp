@@ -1,0 +1,15 @@
+echo "# Temporary resolver to debug mapisto \
+127.0.0.1 mapisto.org \
+127.0.0.1 api.mapisto.org \
+127.0.0.1 dev.mapisto.org \
+127.0.0.1 api.dev.mapisto.org \
+"
+
+# Temporary resolver to debug mapisto 127.0.0.1 mapisto.org 127.0.0.1 api.mapisto.org 127.0.0.1 dev.mapisto.org 127.0.0.1 api.dev.mapisto.org 
+# Temporary resolver to debug mapisto \n 127.0.0.1 mapisto.org \n 127.0.0.1 api.mapisto.org \n 127.0.0.1 dev.mapisto.org \n 127.0.0.1 api.dev.mapisto.org \n 
+# Temporary resolver to debug mapisto 
+127.0.0.1 mapisto.org 
+127.0.0.1 api.mapisto.org 
+127.0.0.1 dev.mapisto.org 
+127.0.0.1 api.dev.mapisto.org 
+

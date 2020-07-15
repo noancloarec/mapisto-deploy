@@ -4,10 +4,8 @@ services:
     image: nginx:1.17.6-alpine
     ports:
       - 80:80
-      - 443:443
     volumes:
-      - /etc/letsencrypt:/etc/letsencrypt
-      - ./nginx_conf.https.d:/etc/nginx/conf.d
+      - ./nginx_conf.http.d:/etc/nginx/conf.d
   mapisto-front-prod:
     image: mapisto/mapisto-front:latest
   mapisto-front-dev:

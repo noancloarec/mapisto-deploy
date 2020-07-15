@@ -29,9 +29,16 @@ cd mapisto-deploy
 ```
 ## 3.  Initialize the database
 ```bash
-docker-compose up database
+cp conf.example.env conf.env
+cp conf.dev.example.env conf.dev.env
 
-docker exec -it <the database container> sh
+docker-compose up -d database-prod database-dev
+```
+For both dev and prod environment, create and fill the 2 separate database
+1. prod
+```bash
+docker exec -it mapisto-deploy_database-prod_1 sh
+
 su - postgres
 
 #Create your user
@@ -41,19 +48,61 @@ createdb -O <username> mapisto
 # Create the tables
 psql mapisto <username>
 # Copy paste the content of database/create_db.sql , then exit the postgresql container
+exit
 
-cp conf.example.env conf.env
 nano conf.env 
-#Edit it according to your postgre sql user & db
+# fill your user name and your user password
+```
+2. dev
+```bash
+docker exec -it mapisto-deploy_database-dev_1 sh
 
+su - postgres
+
+#Create your user (answer no to all y/n question)
+createuser --interactive --pwprompt
+createdb -O <username> mapisto
+
+# Create the tables
+psql mapisto <username>
+# Copy paste the content of database/create_db.sql 
+
+# Now exit the postgresql container
+
+
+# fill your user name and your user password
+nano conf.dev.env 
 ```
 
 ## 4. Fill the database with basic data
 ```bash
 cd database
 ./fill_landmass_db.sh https://api.mapisto.org
+./fill_landmass_db.sh https://api.dev.mapisto.org
 ```
-# 5. Run mapisto
+## 5. Run mapisto
 ```bash
 docker-compose up
+```
+
+# Debug
+In order to run all mapisto on localhost, here is a procedure
+```bash
+# Override /etc/hosts to emulate mapisto locally
+# mapisto.org will be unavailable until you remove these lines from the file
+echo "
+# Temporary resolver to debug mapisto 
+127.0.0.1 mapisto.org 
+127.0.0.1 api.mapisto.org 
+127.0.0.1 dev.mapisto.org 
+127.0.0.1 api.dev.mapisto.org 
+" | sudo tee -a /etc/hosts
+```
+Execute the steps 2 and 3.
+Fill landmass, same as in step 4 but with http instead
+```bash
+docker-compose -f docker-compose.http_only.yml up -d
+cd database
+./fill_landmass_db.sh http://api.mapisto.org
+./fill_landmass_db.sh http://api.dev.mapisto.org
 ```
