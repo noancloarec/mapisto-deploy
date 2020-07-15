@@ -73,14 +73,18 @@ psql mapisto <username>
 # fill your user name and your user password
 nano conf.dev.env 
 ```
-
-## 4. Fill the database with basic data
+## 4. Create elasticsearch directory for logs
+```bash
+mkdir -p $HOME/docker/volumes/elasticsearch_data
+chmod -R 777 $HOME/docker/volumes/elasticsearch_data
+```
+## 5. Fill the database with basic data
 ```bash
 cd database
 ./fill_landmass_db.sh https://api.mapisto.org
 ./fill_landmass_db.sh https://api.dev.mapisto.org
 ```
-## 5. Run mapisto
+## 6. Run mapisto
 ```bash
 docker-compose up
 ```
@@ -98,8 +102,8 @@ echo "
 127.0.0.1 api.dev.mapisto.org 
 " | sudo tee -a /etc/hosts
 ```
-Execute the steps 2 and 3.
-Fill landmass, same as in step 4 but with http instead
+Execute the steps 2, 3, 4.
+Fill landmass, same as in step 5 but with http instead
 ```bash
 docker-compose -f docker-compose.http_only.yml up -d
 cd database
