@@ -8,6 +8,7 @@ services:
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt
       - ./nginx_conf.https.d:/etc/nginx/conf.d
+      - ./http_passwords:/http_passwords
   mapisto-front-prod:
     image: mapisto/mapisto-front:latest
   mapisto-front-dev:

@@ -73,10 +73,14 @@ psql mapisto <username>
 # fill your user name and your user password
 nano conf.dev.env 
 ```
-## 4. Create elasticsearch directory for logs
+## 4. Setup logs monitoring
+Ensure `apache2-utils` is installed
 ```bash
 mkdir -p $HOME/docker/volumes/elasticsearch_data
 chmod -R 777 $HOME/docker/volumes/elasticsearch_data
+mkdir http_passwords
+htpasswd -c http_passwords/passwords mapisto
+# Enter your password
 ```
 ## 5. Fill the database with basic data
 ```bash
