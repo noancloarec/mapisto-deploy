@@ -6,6 +6,7 @@ services:
       - 80:80
     volumes:
       - ./nginx_conf.http.d:/etc/nginx/conf.d
+      - ./http_passwords:/http_passwords
   mapisto-front-prod:
     image: mapisto/mapisto-front:latest
   mapisto-front-dev:
