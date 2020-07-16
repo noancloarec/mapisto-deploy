@@ -100,6 +100,7 @@ echo "
 127.0.0.1 api.mapisto.org 
 127.0.0.1 dev.mapisto.org 
 127.0.0.1 api.dev.mapisto.org 
+127.0.0.1 monitor.mapisto.org 
 " | sudo tee -a /etc/hosts
 ```
 Execute the steps 2, 3, 4.
