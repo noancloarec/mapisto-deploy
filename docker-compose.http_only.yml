@@ -25,47 +25,54 @@ services:
       SERVICE_NAME : mapisto-api-dev
     env_file:
       - conf.dev.env
+    ports: 
+      - 1616:5000
   database-prod:
     image: postgres:12-alpine
     volumes:
       - $HOME/docker/volumes/postgres_prod:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: example
   database-dev:
     image: postgres:12-alpine
     volumes:
       - $HOME/docker/volumes/postgres_dev:/var/lib/postgresql/data
-  apm-server:
-    image: docker.elastic.co/apm/apm-server:7.8.0
-    depends_on:
-      - elasticsearch
-      - kibana
-    cap_add: ["CHOWN", "DAC_OVERRIDE", "SETGID", "SETUID"]
-    cap_drop: ["ALL"]
-    command: >
-       apm-server -e
-         -E apm-server.rum.enabled=true
-         -E setup.kibana.host=kibana:5601
-         -E setup.template.settings.index.number_of_replicas=0
-         -E apm-server.kibana.enabled=true
-         -E apm-server.kibana.host=kibana:5601
-         -E output.elasticsearch.hosts=["elasticsearch:9200"]
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
     environment:
-    - bootstrap.memory_lock=true
-    - cluster.name=docker-cluster
-    - cluster.routing.allocation.disk.threshold_enabled=false
-    - discovery.type=single-node
-    - ES_JAVA_OPTS=-XX:UseAVX=2 -Xms1g -Xmx1g
-    ulimits:
-      memlock:
-        hard: -1
-        soft: -1
-    volumes:
-    - $HOME/docker/volumes/elasticsearch_data:/usr/share/elasticsearch/data
-  kibana:
-    image: docker.elastic.co/kibana/kibana:7.8.0
-    depends_on:
-      - elasticsearch
-    environment:
-      ELASTICSEARCH_URL: http://elasticsearch:9200
-      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+      POSTGRES_PASSWORD: example
+
+  # apm-server:
+  #   image: docker.elastic.co/apm/apm-server:7.8.0
+  #   depends_on:
+  #     - elasticsearch
+  #     - kibana
+  #   cap_add: ["CHOWN", "DAC_OVERRIDE", "SETGID", "SETUID"]
+  #   cap_drop: ["ALL"]
+  #   command: >
+  #      apm-server -e
+  #        -E apm-server.rum.enabled=true
+  #        -E setup.kibana.host=kibana:5601
+  #        -E setup.template.settings.index.number_of_replicas=0
+  #        -E apm-server.kibana.enabled=true
+  #        -E apm-server.kibana.host=kibana:5601
+  #        -E output.elasticsearch.hosts=["elasticsearch:9200"]
+  # elasticsearch:
+  #   image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
+  #   environment:
+  #   - bootstrap.memory_lock=true
+  #   - cluster.name=docker-cluster
+  #   - cluster.routing.allocation.disk.threshold_enabled=false
+  #   - discovery.type=single-node
+  #   - ES_JAVA_OPTS=-XX:UseAVX=2 -Xms1g -Xmx1g
+  #   ulimits:
+  #     memlock:
+  #       hard: -1
+  #       soft: -1
+  #   volumes:
+  #   - $HOME/docker/volumes/elasticsearch_data:/usr/share/elasticsearch/data
+  # kibana:
+  #   image: docker.elastic.co/kibana/kibana:7.8.0
+  #   depends_on:
+  #     - elasticsearch
+  #   environment:
+  #     ELASTICSEARCH_URL: http://elasticsearch:9200
+  #     ELASTICSEARCH_HOSTS: http://elasticsearch:9200
