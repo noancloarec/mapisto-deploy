@@ -73,7 +73,7 @@ psql mapisto <username>
 # fill your user name and your user password
 nano conf.dev.env 
 ```
-## 4. Setup logs monitoring
+## 4. Setup logs monitoring (to ignore for the moment)
 Ensure `apache2-utils` is installed
 ```bash
 mkdir -p $HOME/docker/volumes/elasticsearch_data
@@ -84,6 +84,7 @@ htpasswd -c http_passwords/passwords mapisto
 ```
 ## 5. Fill the database with basic data
 ```bash
+docker-compose up -d
 cd database
 ./fill_landmass_db.sh https://api.mapisto.org
 ./fill_landmass_db.sh https://api.dev.mapisto.org
